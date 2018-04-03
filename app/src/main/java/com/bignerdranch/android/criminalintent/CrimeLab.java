@@ -20,6 +20,8 @@ public class CrimeLab {
         for(int i=0; i < 100; i++){
             Crime crime = new Crime();
             crime.setTitle("Crime #" + i);
+            if(i%11==1) crime.setRequiresPolice(true); //Random identifying bad crime with calling police
+                else crime.setRequiresPolice(false);
             crime.setSolved(i%2==0);
             mCrimes.add(crime);
         }

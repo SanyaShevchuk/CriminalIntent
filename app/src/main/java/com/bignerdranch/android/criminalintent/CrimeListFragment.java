@@ -49,12 +49,19 @@ public class CrimeListFragment extends Fragment {
         private TextView mDateTextView;
         private Crime mCrime;
 
-        public CrimeHolder(LayoutInflater inflater, ViewGroup parent){
+       /* public CrimeHolder(LayoutInflater inflater, ViewGroup parent){
             super(inflater.inflate(R.layout.list_item_crime, parent, false));
             itemView.setOnClickListener(this);
             mTitleTextView = (TextView) itemView.findViewById(R.id.crime_title);
             mDateTextView = (TextView) itemView.findViewById(R.id.crime_date);
-        }
+        }*/
+
+       public CrimeHolder(View view){
+           super(view);
+           itemView.setOnClickListener(this);
+           mTitleTextView = (TextView) itemView.findViewById(R.id.crime_title);
+           mDateTextView = (TextView) itemView.findViewById(R.id.crime_date);
+       }
 
         public void bind(Crime crime){
             mCrime = crime;
@@ -78,8 +85,16 @@ public class CrimeListFragment extends Fragment {
 
         @Override
         public CrimeHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            return  new CrimeHolder(layoutInflater, parent);
+            View view=null;
+            viewType = getItemViewType(viewType);
+            if(viewType == 0) {
+                view = LayoutInflater.from(getActivity())
+                        .inflate(R.layout.list_item_crime, parent, false);
+            }
+            else if(viewType==1) view = LayoutInflater.from(getActivity())
+                    .inflate(R.layout.list_of_bad_crime,parent,false);
+
+            return new CrimeHolder(view);
         }
 
         @Override
@@ -91,6 +106,15 @@ public class CrimeListFragment extends Fragment {
         @Override
         public int getItemCount() {
             return mCrimes.size();
+        }
+
+        /**
+         * If a crime is really bad, we return 1, if not, we return 0;
+         */
+        public int getItemViewType(int position){
+            if(mCrimes.get(position).getRequiresPolice())
+                return 1;
+            else return 0;
         }
     }
 }

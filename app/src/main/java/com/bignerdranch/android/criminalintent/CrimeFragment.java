@@ -44,7 +44,6 @@ public class CrimeFragment extends Fragment {
 
         mSolvedCheckBox = (CheckBox) v.findViewById(R.id.crime_solved);
 
-
         return v;
     }
 
