@@ -1,6 +1,5 @@
 package com.bignerdranch.android.criminalintent;
 
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,11 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.text.DateFormat;
 import java.util.List;
 import java.util.Locale;
+
 
 /**
  * Created by User on 27.03.2018.
@@ -41,22 +39,20 @@ public class CrimeListFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onResume() {
+    @Override public void onResume() {
         super.onResume();
         updateUI();
     }
+
 
     private void updateUI() {
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         List<Crime> crimes = crimeLab.getCrimes();
 
-        if(mAdapter==null) {
-            mAdapter = new CrimeAdapter(crimes);
-            mCrimeRecyclerView.setAdapter(mAdapter);
-        } else {
-            mAdapter.notifyDataSetChanged();
-        }
+        if(mAdapter==null){
+        mAdapter = new CrimeAdapter(crimes);
+        mCrimeRecyclerView.setAdapter(mAdapter);}
+        else mAdapter.notifyDataSetChanged();
     }
 
     public void returnResult() {
@@ -65,9 +61,8 @@ public class CrimeListFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (requestCode == REQUEST_CRIME) {
-              }
+        if(resultCode!= Activity.RESULT_OK)
+            return;
     }
 
     private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -96,7 +91,8 @@ public class CrimeListFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            startActivity(CrimeActivity.newIntent(getActivity(),mCrime.getId()));
+            Intent intent = CrimePagerActivity.newIntent(getActivity(),mCrime.getId());
+            startActivityForResult(intent,REQUEST_CRIME);
         }
     }
 

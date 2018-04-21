@@ -16,8 +16,6 @@ import android.widget.EditText;
 
 import java.util.UUID;
 
-import butterknife.OnCheckedChanged;
-import butterknife.OnTextChanged;
 
 public class CrimeFragment extends Fragment {
 
@@ -34,7 +32,6 @@ public class CrimeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
         mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
-
     }
 
     @Nullable
@@ -83,8 +80,6 @@ public class CrimeFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
     }
-
-
 
     public static CrimeFragment newIntent(UUID crimeId){
         Bundle args = new Bundle();
